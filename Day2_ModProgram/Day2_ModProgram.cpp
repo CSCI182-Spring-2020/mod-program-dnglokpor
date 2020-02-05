@@ -1,12 +1,24 @@
-#include <Windows.h>
-#include <ctime>
+/*
+CSCI 182 - Asssignment 1
+Day2_ModProgram.cpp
+Manually crate a Mod funtion for use
 
-CONST int NO_ITERATIONS = 10000;
-
-typedef long long int64; typedef unsigned long long uint64;
+Brett Huffman
+v1.0 1/29/2020
+*/
 
 #include <iostream>
-using namespace std;
+
+// Get the min value of two input values
+int GetMinValue(int valueA, int valueB)
+{
+	if (valueA < valueB) { // valueA is the min
+		return valueA;
+	}
+	else { // valueB is min or equal to valueA
+		return valueB;
+	}
+}
 
 /// <summary>
 /// Returns the remainder of the integer division of two numbers by division then substraction
@@ -52,74 +64,35 @@ int Mod2(int valueA, int valueB) {
 	}
 }
 
-
-uint64 GetTimeMs64()
-{
-	FILETIME ft;
-	LARGE_INTEGER li;
-	GetSystemTimeAsFileTime(&ft);
-	li.LowPart = ft.dwLowDateTime;
-	li.HighPart = ft.dwHighDateTime;
-
-	uint64 ret = li.QuadPart;
-	ret -= 116444736000000000LL; /* Convert from file time to UNIX epoch time. */
-	ret /= 10000; /* From 100 nano seconds (10^-7) to 1 millisecond (10^-3) intervals */
-
-	return ret;
-}
-
 int main()
 {
+	// std::cout << "Hello World!\n";
+	int valueA = 400;
+	int valueB = 220;
 
-	double firstNo = 0.0;
-	double secondNo = 0.0;
-	double resultSubMethod = 0.0;
-	double resultDivMethod = 0.0;
-	uint64 startTime = 0.0;
-	uint64 endTime = 0.0;
-	uint64 nTickCountFunction1 = 0.0;
-	uint64 nTickCountFunction2 = 0.0;
+	// Find the min value and pretty print it to the screen
+	// std::cout << "Min Value: " << GetMinValue(a, b) << "\n";
 
-	std::srand(199); // use as seed for random generator
+	// Print the modulus of the a / b
+	if (Mod(valueA, valueB) == -1)
+		std::cout << "Can't divide by 0" << "\n";
+	else
+		std::cout << "Using Mod, " << valueA << "/" << valueB << " has a remainder of " << Mod(valueA, valueB) << ".\n";
 
-	startTime = GetTimeMs64();
-
-	for (int i = 0; i < NO_ITERATIONS; i++)
-	{
-		// if (i % 10000 == 0) cout << i << endl;
-
-		// Get random numbers between 1 - 1001 (never want 0)
-		firstNo = std::rand() % 1000 + 1;
-		secondNo = std::rand() % 1000 + 1;
-
-		// PUT THE CALL TO YOUR FIRST MOD FUNCTION HERE
-		Mod(firstNo, secondNo);
-	}
-	// Get the End time + add it to our counter
-	endTime = GetTimeMs64();
-	nTickCountFunction1 = endTime - startTime;
-
-
-	std::srand(199); // use as seed for random generator
-	startTime = GetTimeMs64();
-	for (int i = 0; i < NO_ITERATIONS; i++)
-	{
-		// if (i % 10000 == 0) cout << i << endl;
-
-		// Get random numbers between 1 - 1001 (never want 0)
-		firstNo = std::rand() % 1000 + 1;
-		secondNo = std::rand() % 1000 + 1;
-
-		// PUT THE CALL TO YOUR SECOND MOD FUNCTION HERE
-		Mod2(firstNo, secondNo);
-	}
-
-	endTime = GetTimeMs64();
-	nTickCountFunction2 = endTime - startTime;
-
-	std::cout << "\t\tMethod 1" << "\tMethod 2" << "\n";
-	std::cout << "Total Count:\t" << NO_ITERATIONS << "\t\t" << NO_ITERATIONS << "\n";
-	std::cout << "Total Time:\t" << nTickCountFunction1 << "ms\t\t" << nTickCountFunction2 << "ms\n";
-
-	return 0;
+	// Print the modulus of the a / b using the 2nd method
+	if (Mod2(valueA, valueB) == -1)
+		std::cout << "Can't divide by 0" << "\n";
+	else
+		std::cout << "Using Mod2, " << valueA << "/" << valueB << " has a remainder of " << Mod2(valueA, valueB) << ".\n";
 }
+
+// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
+// Debug program: F5 or Debug > Start Debugging menu
+
+// Tips for Getting Started: 
+//   1. Use the Solution Explorer window to add/manage files
+//   2. Use the Team Explorer window to connect to source control
+//   3. Use the Output window to see build output and other messages
+//   4. Use the Error List window to view errors
+//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
+//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
